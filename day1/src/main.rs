@@ -11,20 +11,31 @@ fn main() {
     let file = File::open(file_path).unwrap();
     let reader = io::BufReader::new(file);
 
-    let mut max = 0;
     let mut sum = 0;
+    let mut max = [0, 0, 0];
 
     for line in reader.lines().flatten() {
         if !line.is_empty() {
             let number = line.parse::<i32>().unwrap();
             sum += number;
-        } else if sum > max {
-            max = sum;
+        } else if sum > max[0] {
+            max[0] = sum;
             sum = 0;
+            max.sort();
+            println!("Sorted: ");
+            for b in max {
+                print!("{b} ");
+            }
+            println!("\n");
         } else {
             sum = 0;
         }
     }
 
-    println!("num:\n{max}");
+    sum=0;
+    for b in max {
+        sum+=b;
+    }
+
+    println!("sum:\n{sum}");
 }
