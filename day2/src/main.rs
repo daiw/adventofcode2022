@@ -19,37 +19,42 @@ fn main() {
 }
 
 fn compute_points(line: String) -> i32 {
-    points_for_shape(line.chars().nth(2).unwrap())
-        + points_for_result(line.chars().nth(0).unwrap(), line.chars().nth(2).unwrap())
+    points_for_shape(line.chars().nth(0).unwrap(), line.chars().nth(2).unwrap())
+        + points_for_result(line.chars().nth(2).unwrap())
 }
 
-fn points_for_shape(shape: char) -> i32 {
-    if shape == 'X' {
+fn points_for_shape(shape: char, my_goal: char) -> i32 {
+    if shape == 'A' && my_goal == 'Y'
+        || shape == 'B' && my_goal == 'X'
+        || shape == 'C' && my_goal == 'Z'
+    {
         return 1;
     }
-    if shape == 'Y' {
+    if shape == 'B' && my_goal == 'Y'
+        || shape == 'C' && my_goal == 'X'
+        || shape == 'A' && my_goal == 'Z'
+    {
         return 2;
     }
-    if shape == 'Z' {
+
+    if shape == 'C' && my_goal == 'Y'
+        || shape == 'A' && my_goal == 'X'
+        || shape == 'B' && my_goal == 'Z'
+    {
         return 3;
     }
     0
 }
 
-fn points_for_result(other_shape: char, my_shape: char) -> i32 {
-    if other_shape == 'A' && my_shape == 'X'
-        || other_shape == 'B' && my_shape == 'Y'
-        || other_shape == 'C' && my_shape == 'Z'
-    {
+fn points_for_result(my_goal: char) -> i32 {
+    if my_goal == 'X' {
+        return 0;
+    }
+    if my_goal == 'Y' {
         return 3;
     }
-
-    if other_shape == 'C' && my_shape == 'X'
-        || other_shape == 'A' && my_shape == 'Y'
-        || other_shape == 'B' && my_shape == 'Z'
-    {
+    if my_goal == 'Z' {
         return 6;
     }
-
     0
 }
