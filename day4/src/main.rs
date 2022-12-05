@@ -42,5 +42,5 @@ fn is_contained(line: &str) -> bool {
     let y1: i32 = second[..second_minus].parse().expect("no number");
     let y2: i32 = second[second_minus + 1..].parse().expect("no number");
 
-    (x1 >= y1 && x2 <= y2) || (y1 >= x1 && y2 <= x2)
+    (x1 <= y1 && x2 >= y1) || (y1 <= x1 && y2 >= x1) || (x2 >= y2 && x1 <= y2) || (y2 >= x2 && y1 <= x2)
 }
