@@ -9,9 +9,13 @@ fn main() {
 
     let mut prio_sum = 0;
 
-    reader.lines().for_each(|line| {
-        if let Ok(l) = line {
-            prio_sum += compute_prio(l);
+    let mut stack = Vec::new();
+
+    reader.lines().flatten().for_each(|line| {
+        stack.push(line);
+        if stack.len() == 3 {
+            prio_sum += compute_prio_of_three(&stack[0], &stack[1], &stack[2]);
+            stack.clear();
         }
     });
 
@@ -30,6 +34,18 @@ fn compute_prio(line: String) -> i32 {
         return get_prio(i);
     }
 
+    0
+}
+
+fn compute_prio_of_three(line: &str, line2: &str, line3: &str) -> i32 {
+    
+    let item = line.chars().find(|c| 
+        line2.chars().any(|c2| c2.eq(c)) && line3.chars().any(|c3| c3.eq(c))
+    );
+
+    if let Some(i) = item {
+        return get_prio(i);
+    }
     0
 }
 
